@@ -3,5 +3,3 @@ __pycache__/
 .api_env/
 venv/
 .env
-# contains a live database connection string - never commit
-conceptual/sample.txt
