@@ -1,0 +1,15 @@
+Create a FastAPI application for managing students.
+
+Required APIs
+
+POST /students
+
+GET /students
+
+GET /students/{student_id}
+
+PUT /students/{student_id}
+
+DELETE /students/{student_id}
+
+Student fields can include id, name, email, age, and course. Use Pydantic validation and return appropriate HTTP status codes.

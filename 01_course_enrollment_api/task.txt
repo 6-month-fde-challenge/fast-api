@@ -1,0 +1,15 @@
+Build a small FastAPI application where students can enroll in courses.
+
+Create APIs to
+
+POST /courses
+
+GET /courses
+
+POST /enroll
+
+GET /students/{student_id}/courses
+
+DELETE /enroll/{enrollment_id}
+
+Prevent a student from enrolling in the same course twice. Return meaningful errors such as 404 when a student/course doesn't exist.

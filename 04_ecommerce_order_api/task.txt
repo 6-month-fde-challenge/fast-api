@@ -1,0 +1,21 @@
+Build a small FastAPI backend for placing orders.
+
+Create APIs such as
+
+POST /products
+
+GET /products
+
+POST /orders
+
+GET /orders
+
+GET /orders/{order_id}
+
+PUT /orders/{order_id}/status
+
+An order should contain a customer, products, quantities, total amount, and status such as:
+
+PLACED → PROCESSING → SHIPPED → DELIVERED
+
+Validate that the requested product exists and the quantity is valid. Calculate the total order amount on the server, rather than accepting the final amount directly from the client.

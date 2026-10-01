@@ -1,0 +1,17 @@
+Create an Employee Management API where certain endpoints are protected using an API key.
+
+Example
+
+GET /employees
+
+POST /employees
+
+PUT /employees/{employee_id}
+
+DELETE /employees/{employee_id}
+
+For protected endpoints, expect a header such as
+
+X-API-Key: super30-secret-key
+
+If the API key is missing or incorrect, return an appropriate 401/403 response. Add Pydantic validation for employee data.

@@ -1,5 +1,7 @@
 __pycache__/
 *.pyc
-.venv/
+.api_env/
 venv/
 .env
+# contains a live database connection string - never commit
+conceptual/sample.txt
