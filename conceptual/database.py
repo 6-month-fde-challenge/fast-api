@@ -121,3 +121,62 @@ def delete_student(student_id: int):
         return {"message": "Student deleted successfully"}
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error deleting student: {e}")
+
+@app.get("/students_limit")
+def limit_student_update():
+    try:
+        with SessionLocal() as session:
+            result = session.execute(text("SELECT * FROM students"))
+            return [dict(row) for row in result.mappings().all()]
+
+    except Exception:
+        raise HTTPException(
+            status_code=500,
+            detail="Database error occurred"
+        )
+
+
+from slowapi import Limiter, _rate_limit_exceeded_handler
+from slowapi.util import get_remote_address
+from slowapi.errors import RateLimitExceeded
+from fastapi import FastAPI, Request
+
+# app = FastAPI()
+
+limiter = Limiter(key_func=get_remote_address)
+app.state.limiter = limiter
+app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
+
+
+@app.get("/test-rate-limit")
+@limiter.limit("500/minute")
+def test_rate_limit(request: Request):
+    return {
+        "message": "Rate limit test successful!",
+        "limit": "5 requests per minute"
+    }
+
+#CORS --> Cross Origin Resource Sharing
+# We need to restrict access of one API port for some particular ports..like a wall..  Example.. 
+# Frontend : localhost:5000 --> This calls backend..
+# Backend : localhost:8000 --> Backend should allow requests from frontend (localhost:5000) to avoid CORS errors
+
+from fastapi.middleware.cors import CORSMiddleware
+
+app.add_middleware(
+    CORSMiddleware,
+    # allow_origins=["*"],  # Allow all origins
+    allow_origins=["http://localhost:3000"],  # Allow only localhost:3000
+    allow_credentials=True,
+    allow_methods=["*"],  # Allow all methods
+    allow_headers=["*"],  # Allow all headers
+)
+
+
+@app.get("/test-cors")
+def test_cors():
+    return {"message": "CORS test successful!"}
+
+# Run backend : uvicorn database:app --reload --port 5000
+# Run frontend : python test_cors.py
+# Run front end from non-allower port : python test_cors.py 5500
